@@ -3,15 +3,14 @@
 //  MyBooks
 //
 //  Created by Lucrezia Odrljin on 10.06.2024..
-//
 
-import Foundation
-// necessary for our model to make it into a swift data object
+
+import SwiftUI
+// making model into a swift data object
 import SwiftData
 
 // macro -> kreira "model knjige" tj.pri kreiranju nove knjige postavljat cemo ime i autora, ostali propertiji ce imati defaltnu vrijednost
 @Model
-
 class Book {
     // property-ji
     var title: String
@@ -46,6 +45,17 @@ class Book {
         self.status = status
     }
     
+    // computed property "icon" za razlicite statuse knjiga
+    var icon: Image {
+        switch status {
+        case .onShelf:
+            Image(systemName: "checkmark.diamond.fill")
+        case .inProgress:
+            Image(systemName: "book.fill")
+        case .completed:
+            Image(systemName: "books.vertical.fill")
+        }
+    }
     
 }
 
