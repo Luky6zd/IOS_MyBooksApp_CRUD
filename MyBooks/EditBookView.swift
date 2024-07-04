@@ -84,80 +84,84 @@ struct EditBookView: View {
             }
             //  element za odvajanje sadrzaja
             Divider()
-                LabeledContent {
-                    RatingsView(maxRating: 5, currentRating: $rating, width: 30)
-                } label: {
-                    Text("Rating")
-                }
-                LabeledContent {
-                    TextField("", text: $title)
-                } label: {
-                    Text("Title").foregroundStyle(.secondary)
-                }
-                LabeledContent {
-                    TextField("", text: $author)
-                } label: {
-                    Text("Author").foregroundStyle(.secondary)
-                }
-                Divider()
+            LabeledContent {
+                RatingsView(maxRating: 5, currentRating: $rating, width: 30)
+            } label: {
+                Text("Rating")
+            }
+            LabeledContent {
+                TextField("", text: $title)
+            } label: {
+                Text("Title").foregroundStyle(.secondary)
+            }
+            LabeledContent {
+                TextField("", text: $author)
+            } label: {
+                Text("Author").foregroundStyle(.secondary)
+            }
+            Divider()
             
-                Text("Summary").foregroundStyle(.secondary)
-                TextEditor(text: $summary)
-                    .padding(5)
-                    .overlay(RoundedRectangle(cornerRadius: 20)
+            Text("Summary").foregroundStyle(.secondary)
+            TextEditor(text: $summary)
+                .padding(5)
+                .overlay(RoundedRectangle(cornerRadius: 20)
                     .stroke(Color(uiColor: .tertiarySystemFill), lineWidth: 2))
-            }
-            .padding()
-            .textFieldStyle(.roundedBorder)
-            .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                // prikaz update botuna ako je changed true sa state propertijima
-                if changed {
-                    Button("Update") {
-                        book.status = status
-                        book.title = title
-                        book.author = author
-                        book.rating = rating
-                        book.summary = summary
-                        book.dateAdded = dateAdded
-                        book.dateStarted = dateStarted
-                        book.dateCompleted = dateCompleted
+        }
+        .padding()
+        .textFieldStyle(.roundedBorder)
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            // prikaz update botuna ako je changed true sa state propertijima
+            if changed {
+                Button("Update") {
+                    book.status = status
+                    book.title = title
+                    book.author = author
+                    book.rating = rating
+                    book.summary = summary
+                    book.dateAdded = dateAdded
+                    book.dateStarted = dateStarted
+                    book.dateCompleted = dateCompleted
                     
-                        dismiss()
-                    }
-                    .buttonStyle(.borderedProminent)
+                    dismiss()
                 }
-            }
-            // spajamo book state propertije sa book model propertijima
-            .onAppear {
-                status = book.status
-                rating = book.rating
-                title = book.title
-                author = book.author
-                summary = book.summary
-                dateAdded = book.dateAdded
-                dateCompleted = book.dateCompleted
-                dateStarted = book.dateStarted
-            }
-            // boolean computed property koji provjerava promjene na propertijima
-            var changed: Bool {
-            // provjera ako status nije jednak book statusu ili
-                status != book.status
-                || rating != book.rating
-                || title != book.title
-                || author != book.author
-                || summary != book.summary
-                || dateAdded != book.dateAdded
-                || dateCompleted != book.dateCompleted
-                || dateStarted != book.dateStarted
+                .buttonStyle(.borderedProminent)
             }
         }
-    
-    //#Preview {
-    //    NavigationStack {
-    //        EditBookView()
-    //    }
-    // }
-    
+        // spajamo book state propertije sa book model propertijima
+        .onAppear {
+            status = book.status
+            rating = book.rating
+            title = book.title
+            author = book.author
+            summary = book.summary
+            dateAdded = book.dateAdded
+            dateCompleted = book.dateCompleted
+            dateStarted = book.dateStarted
+        }
+        // boolean computed property koji provjerava promjene na propertijima
+        var changed: Bool {
+            // provjera ako status nije jednak book statusu ili
+            status != book.status
+            || rating != book.rating
+            || title != book.title
+            || author != book.author
+            || summary != book.summary
+            || dateAdded != book.dateAdded
+            || dateCompleted != book.dateCompleted
+            || dateStarted != book.dateStarted
+        }
+    }
 }
+
+#Preview {
+    // kreiranje custom preview containera-model containera
+    let preview = Preview(Book.self)
+    // vraca tip book array Book sa primjerima knjiga, npr.2
+    return NavigationStack {
+        EditBookView(book: Book.sampleBooks[2])
+            .modelContainer(preview.container)
+    }
+}
+

@@ -75,7 +75,14 @@ struct BookListView: View {
     }
 }
 
+// preview na ekranu(canvasu)
+// sample knjige spremljene u memoriji i prikazane na ekranu
 #Preview {
-    BookListView()
-        .modelContainer(for: Book .self, inMemory: true)
+    // instanca preview strukta-book model
+    let preview = Preview(Book.self)
+    // pozivanje funkcije sa argumentom book array book samples
+    preview.addExamples(Book.sampleBooks)
+    return BookListView()
+        // model container za knjigu u memoriji, preview container property
+        .modelContainer(preview.container)
 }
