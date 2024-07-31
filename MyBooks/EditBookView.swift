@@ -115,7 +115,8 @@ struct EditBookView: View {
             // prikaz update botuna ako je changed true sa state propertijima
             if changed {
                 Button("Update") {
-                    book.status = status
+                    // refaktoriranje statusa u Int
+                    book.status = status.rawValue
                     book.title = title
                     book.author = author
                     book.rating = rating
@@ -131,7 +132,8 @@ struct EditBookView: View {
         }
         // spajamo book state propertije sa book model propertijima
         .onAppear {
-            status = book.status
+            // refaktoriranje statusa u Int sa force unwrapom
+            status = Status(rawValue: book.status)!
             rating = book.rating
             title = book.title
             author = book.author
@@ -142,8 +144,8 @@ struct EditBookView: View {
         }
         // boolean computed property koji provjerava promjene na propertijima
         var changed: Bool {
-            // provjera ako status nije jednak book statusu ili
-            status != book.status
+            // provjera ako status nije jednak book statusu ili...
+            status != Status(rawValue: book.status)!
             || rating != book.rating
             || title != book.title
             || author != book.author

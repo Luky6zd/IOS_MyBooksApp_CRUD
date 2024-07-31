@@ -8,56 +8,34 @@
 import SwiftUI
 import SwiftData
 
+// enum tipa string, protokoli identifiable i case iterable
+enum SortOrder: String, Identifiable, CaseIterable {
+    // 3 case-a za prolazak kroz
+    case status, title, author
+    
+    // computed property kreiran radi identifiable protokola koji vraca self
+    var id: Self {
+        self
+    }
+}
+
 struct BookListView: View {
-    // environment property sa putanjom ključa od modela knige u bazi
-    @Environment(\.modelContext) private var context
-    @Query(sort: \Book.title) private var books: [Book]
+    // state property varijabla sa defaultnom vrijednoscu false
     @State private var createNewBook = false
+    // state property varijabla sa defaultnom vrijednoscu sort ordera po statusu
+    @State private var sortOrder = SortOrder.status
     
     var body: some View {
         NavigationStack {
-            Group {
-                // ako je lista knjiga prazna
-                if books.isEmpty {
-                    ContentUnavailableView("Enter your first book", systemImage: "book.fill")
-                    // ako lista nije prazna
-                } else {
-                    List {
-                        ForEach(books) { book in
-                            NavigationLink {
-                                EditBookView(book: book)
-                            } label: {
-                                HStack(spacing: 10) {
-                                    book.icon
-                                    VStack(alignment: .leading) {
-                                        Text(book.title).font(.title2)
-                                        Text(book.author).foregroundStyle(.secondary)
-                                        // kreiranje zvjezdica - book ratinga
-                                        if let rating = book.rating {
-                                            HStack {
-                                                ForEach(1..<rating, id: \.self) {
-                                                    _ in
-                                                    Image(systemName: "star.fill")
-                                                        .imageScale(.small)
-                                                        .foregroundStyle(.yellow)
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        // swipe u lijevo za obrisati knjigu
-                        .onDelete{ indexSet in
-                            indexSet.forEach { index in
-                                let book = books[index]
-                                context.delete(book)
-                            }
-                        }
-                    }
-                    .listStyle(.plain)
+            Picker("", selection: $sortOrder) {
+                ForEach(SortOrder.allCases) { sortOrder in
+                    Text("Sort by \(sortOrder.rawValue)").tag(sortOrder)
                 }
             }
+            .buttonStyle(.bordered)
+            
+            BookList()
+            
             .navigationTitle("My Books")
             .toolbar {
                 Button {

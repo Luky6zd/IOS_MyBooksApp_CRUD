@@ -19,8 +19,9 @@ class Book {
     var dateStarted: Date
     var dateCompleted: Date
     var summary: String
-    var rating: Int? // optional in
-    var status: Status
+    var rating: Int? // optional int
+    // refaktoriranje statusa iz tipa Status u tip Int koji je ujedno i rawValue
+    var status: Status.RawValue // ili tip Int
     
     // kada koristimo klasu trebamo inicijalizator -> konstruktor
     init( // parametri inicijalizatora
@@ -34,7 +35,7 @@ class Book {
         status: Status = .onShelf
     )
     
-    {
+    { // inicijalizacija propertija
         self.title = title
         self.author = author
         self.dateAdded = dateAdded
@@ -42,12 +43,14 @@ class Book {
         self.dateCompleted = dateCompleted
         self.summary = summary
         self.rating = rating
-        self.status = status
+        // refaktoriranje statusa u tip Int(rawValue)
+        self.status = status.rawValue
     }
     
     // computed property "icon" za razlicite statuse knjiga
     var icon: Image {
-        switch status {
+        // refaktoriranje iz switcha po statusu u switch po Enumu
+        switch Status(rawValue: status)! { // force unwrap
         case .onShelf:
             Image(systemName: "checkmark.diamond.fill")
         case .inProgress:
@@ -59,7 +62,7 @@ class Book {
     
 }
 
-// enum tipa Int, za SwiftDatu mora biti Codable, za Picker mora biti Identifiable, CaseIterable ako želimo petljom prolaziti kroz case-ove
+// enum  Status tipa Int, za SwiftData-u mora imati ponasanje Codable, za Picker mora biti Identifiable, CaseIterable ako želimo petljom prolaziti kroz case-ove
 enum Status: Int, Codable, Identifiable, CaseIterable {
     case onShelf, inProgress, completed // 3 case-a/stanja knjige
     
