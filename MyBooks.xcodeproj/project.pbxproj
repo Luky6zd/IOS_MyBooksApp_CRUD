@@ -16,6 +16,7 @@
 		ADC7CE952C30442D004FCD8D /* EditBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC7CE942C30442D004FCD8D /* EditBookView.swift */; };
 		ADC7CE992C306E02004FCD8D /* RatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC7CE982C306E02004FCD8D /* RatingsView.swift */; };
 		ADCC76472C35A92E00149DA1 /* BookSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCC76462C35A92E00149DA1 /* BookSamples.swift */; };
+		ADD9C21F2C39E23800059886 /* BookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD9C21E2C39E23800059886 /* BookList.swift */; };
 		ADDBE3BD2C36DC54003EB3B9 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDBE3BC2C36DC54003EB3B9 /* PreviewContainer.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		ADC7CE942C30442D004FCD8D /* EditBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBookView.swift; sourceTree = "<group>"; };
 		ADC7CE982C306E02004FCD8D /* RatingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingsView.swift; sourceTree = "<group>"; };
 		ADCC76462C35A92E00149DA1 /* BookSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSamples.swift; sourceTree = "<group>"; };
+		ADD9C21E2C39E23800059886 /* BookList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookList.swift; sourceTree = "<group>"; };
 		ADDBE3BC2C36DC54003EB3B9 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +67,7 @@
 			children = (
 				AD9A64C52C271934005EC9C2 /* MyBooksApp.swift */,
 				AD9A64C72C271934005EC9C2 /* BookListView.swift */,
+				ADD9C21E2C39E23800059886 /* BookList.swift */,
 				ADC7CE922C2F1F5F004FCD8D /* NewBookView.swift */,
 				ADC7CE982C306E02004FCD8D /* RatingsView.swift */,
 				ADC7CE942C30442D004FCD8D /* EditBookView.swift */,
@@ -158,6 +161,7 @@
 				ADCC76472C35A92E00149DA1 /* BookSamples.swift in Sources */,
 				ADC7CE932C2F1F5F004FCD8D /* NewBookView.swift in Sources */,
 				ADC7CE992C306E02004FCD8D /* RatingsView.swift in Sources */,
+				ADD9C21F2C39E23800059886 /* BookList.swift in Sources */,
 				ADC7CE952C30442D004FCD8D /* EditBookView.swift in Sources */,
 				AD9A64C82C271934005EC9C2 /* BookListView.swift in Sources */,
 				AD9A64C62C271934005EC9C2 /* MyBooksApp.swift in Sources */,
