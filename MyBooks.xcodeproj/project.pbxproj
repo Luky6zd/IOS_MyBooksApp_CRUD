@@ -65,9 +65,9 @@
 		AD9A64C42C271934005EC9C2 /* MyBooks */ = {
 			isa = PBXGroup;
 			children = (
-				AD9A64C52C271934005EC9C2 /* MyBooksApp.swift */,
 				AD9A64C72C271934005EC9C2 /* BookListView.swift */,
 				ADD9C21E2C39E23800059886 /* BookList.swift */,
+				AD9A64C52C271934005EC9C2 /* MyBooksApp.swift */,
 				ADC7CE922C2F1F5F004FCD8D /* NewBookView.swift */,
 				ADC7CE982C306E02004FCD8D /* RatingsView.swift */,
 				ADC7CE942C30442D004FCD8D /* EditBookView.swift */,

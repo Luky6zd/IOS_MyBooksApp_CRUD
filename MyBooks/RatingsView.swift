@@ -7,21 +7,31 @@
 
 import SwiftUI
 
-// RatingsView predstavlja ocjenu koju citatelj daje knjizi
+// RatingsView predstavlja ocjenu koju user daje knjizi
 //     RatingsView(maxRating: 10,
 //              currentRating: $currentRating,
 //              width: 20,
 //              color: .red,
 //              ratingImage: .flag)
 
+// struktura tipa View
 public struct RatingsView: View {
-    var maxRating: Int
+    // omotac za spajanje vrijednosti
     @Binding var currentRating: Int?
+    // setiranje propertya
+    var maxRating: Int
     var width:Int
     var color: UIColor
     var sfSymbol: String
     
-    public init(maxRating: Int, currentRating: Binding<Int?>, width: Int = 20, color: UIColor = .systemYellow, sfSymbol: String = "star") {
+    // kreiranje inicijalizatora i setiranje defaultnih vrijednosti
+    public init(
+        maxRating: Int,
+        currentRating: Binding<Int?>,
+        width: Int = 20,
+        color: UIColor = .systemYellow,
+        sfSymbol: String = "star"
+    ) {
         self.maxRating = maxRating
         self._currentRating = currentRating
         self.width = width
@@ -77,20 +87,25 @@ struct FillImage: ViewModifier {
         }
     }
 }
-
+// dodatak Viewu
 extension View {
+    // funkcija
     func fillImage(_ fill: Bool) -> some View {
         modifier(FillImage(fill: fill))
     }
 }
 
+// preview koda na canvasu
 #Preview {
+    // struktura tipa View
     struct PreviewWrapper: View {
+        // state varijabla optional int
         @State var currentRating: Int? = 3
         
         var body: some View {
-            // prikaz ratinga
+            // View za prikaz ratinga u preview canvasu
             RatingsView(
+                // pozivanje varijabli sa vrijednostima
                 maxRating: 5,
                 currentRating: $currentRating,
                 width: 30,
@@ -99,5 +114,6 @@ extension View {
             )
         }
     }
+    // vrati view preview wrapper
     return PreviewWrapper()
 }

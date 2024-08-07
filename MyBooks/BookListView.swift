@@ -2,51 +2,65 @@
 //  ContentView.swift
 //  MyBooks
 //
-//  Created by Lucrezia Odrljin on 10.06.2024..
+//  Created by Lucrezia Odrljin on 10.06.2024.
 
 
 import SwiftUI
 import SwiftData
 
-// enum tipa string, protokoli identifiable i case iterable
+// enum tipa string implementira protokole Identifiable i CaseIterable
 enum SortOrder: String, Identifiable, CaseIterable {
-    // 3 case-a za prolazak kroz
+    // 3 case-a kroz koje prolazimo
     case status, title, author
     
-    // computed property kreiran radi identifiable protokola koji vraca self
+    // id computed property kreiran radi identifiable protokola koji vraca id (self)
     var id: Self {
         self
     }
 }
 
+// struktura tipa View
 struct BookListView: View {
     // state property varijabla sa defaultnom vrijednoscu false
     @State private var createNewBook = false
-    // state property varijabla sa defaultnom vrijednoscu sort ordera po statusu
-    @State private var sortOrder = SortOrder.status
+    // state property sa defaultnom vrijednoscu sort ordera po autoru
+    @State private var sortOrder = SortOrder.author
     
     var body: some View {
+        // kreiranje navigacijske trake
         NavigationStack {
+            // kreiranje pickera, vrsi selekciju prema sort orderu
             Picker("", selection: $sortOrder) {
+                // petlja prolazi kroz enum sort order
                 ForEach(SortOrder.allCases) { sortOrder in
+                    // brojac je sortOrder, pomocu kojeg kreiramo text View i prikazujemo opcije sortiranja
                     Text("Sort by \(sortOrder.rawValue)").tag(sortOrder)
                 }
             }
+            // stil botuna za picker
             .buttonStyle(.bordered)
-            
-            BookList()
-            
+            // umetanje komponente
+            BookList(sortOrder: sortOrder)
+            // umetanje naslova
             .navigationTitle("My Books")
+            // kreiranje toolbara sa botunom i simbolom
             .toolbar {
+                // na klik se kreira nova knjiga
                 Button {
-                    createNewBook = true
+                    return createNewBook = true
+                // oznaka simbola
                 } label: {
+                    // ime slike
                     Image(systemName: "plus.circle.fill")
+                        // View Modifier za povecavanje
                         .imageScale(.large)
                 }
             }
+            // kreiranje novog lista
             .sheet(isPresented: $createNewBook) {
-                NewBookView()
+                // vraca new book View
+                return NewBookView()
+                    // zauzima pola stranice
                     .presentationDetents([.medium])
             }
         }
@@ -56,11 +70,14 @@ struct BookListView: View {
 // preview na ekranu(canvasu)
 // sample knjige spremljene u memoriji i prikazane na ekranu
 #Preview {
-    // instanca preview strukta-book model
-    let preview = Preview(Book.self)
-    // pozivanje funkcije sa argumentom book array book samples
+    // preview je container book modela
+    // kreiranje custom preview containera
+    let preview = PreviewContainer(Book.self)
+    // pozivanje funkcije za dodavanje primjera knjiga
+    // u preview (container) spremamo primjere knjiga sto ih funkcija vrati
     preview.addExamples(Book.sampleBooks)
+    // vraca View sa listom knjiga
     return BookListView()
-        // model container za knjigu u memoriji, preview container property
+        // pozivanje funkcije model container za preview containera knjiga
         .modelContainer(preview.container)
 }
