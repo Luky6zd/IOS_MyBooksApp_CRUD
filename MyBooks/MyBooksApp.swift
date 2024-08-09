@@ -8,15 +8,22 @@
 import SwiftUI
 import SwiftData
 
+// MARK: MAIN APP
+
+//app main decoratin
+// lokacija gdje se app pokrece
 @main
-// lokacija gdje se app pokrece -> app main decoratin
+
+// struktura tipa App
 struct MyBooksApp: App {
     // container tipa model container
     // pomocu model containera konfiguriramo ime i lokaciju gdje zelimo pohraniti bazu podataka
     let container: ModelContainer
     
+    // body tipa some Scene
     var body: some Scene {
         WindowGroup {
+            // pozivanje komponente
             BookListView()
         }
         //.modelContainer(for: Book.self)
@@ -25,14 +32,14 @@ struct MyBooksApp: App {
         .modelContainer(container)
     }
     
-    // inicijalizator za model container
+    // inicijalizator za App model container
     init() {
         // konfiguriranje containera
         // schema je objekt koji mapira model klasu u model store u bazi podataka,
         // na taj nacin radimo migraciju podataka
         // za koristenje scheme moramo joj specificirati array knjiga
         let schema = Schema([Book.self])
-        // kreiranje konfiguracije modela koja koristi schemu sa imenom baze podataka i definiranu schemu
+        // kreiranje konfiguracije modela koja koristi schemu sa imenom baze podataka MyBooks i definiranu schemu
         let config = ModelConfiguration("MyBooks", schema: schema)
         // kreiranje containera pomocu do-try-catch bloka
         do {
@@ -59,4 +66,5 @@ struct MyBooksApp: App {
         //print(URL.documentsDirectory.path())
     }
 }
+
 

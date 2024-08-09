@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftData
 
+// MARK: BOOK LIST
+
 // enum tipa string implementira protokole Identifiable i CaseIterable
 enum SortOrder: String, Identifiable, CaseIterable {
     // 3 case-a kroz koje prolazimo
@@ -25,7 +27,10 @@ struct BookListView: View {
     @State private var createNewBook = false
     // state property sa defaultnom vrijednoscu sort ordera po autoru
     @State private var sortOrder = SortOrder.author
+    // state property za search tipa String defaultne vrijednosti prazni string
+    @State private var filter = ""
     
+    // body tipa some View
     var body: some View {
         // kreiranje navigacijske trake
         NavigationStack {
@@ -40,7 +45,10 @@ struct BookListView: View {
             // stil botuna za picker
             .buttonStyle(.bordered)
             // umetanje komponente
-            BookList(sortOrder: sortOrder)
+            BookList(sortOrder: sortOrder, filterText: filter)
+                // Searchable Modifier
+                // funkcija za pretrazivanje
+                .searchable(text: $filter, prompt: Text("Search"))
             // umetanje naslova
             .navigationTitle("My Books")
             // kreiranje toolbara sa botunom i simbolom
@@ -77,7 +85,7 @@ struct BookListView: View {
     // u preview (container) spremamo primjere knjiga sto ih funkcija vrati
     preview.addExamples(Book.sampleBooks)
     // vraca View sa listom knjiga
-    return BookListView()
+    return BookListView().background(.peach)
         // pozivanje funkcije model container za preview containera knjiga
         .modelContainer(preview.container)
 }

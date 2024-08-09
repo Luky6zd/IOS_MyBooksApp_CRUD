@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+// MARK: EDIT BOOK
+
+// struktura za editiranje knjiga
 struct EditBookView: View {
     // funkcija za izaci iz Viewa
     @Environment(\.dismiss) private var dismiss
@@ -27,6 +30,7 @@ struct EditBookView: View {
     // u onAppear-u kada zelimo da se ucita first view sa propertijima (a ne nakon svakog refresha)
     @State private var firstView = true
     
+    // body tipa some View
     var body: some View {
         // horizontalni stack View za kreiranje izbora knjiga po statusu
         HStack {
@@ -241,6 +245,7 @@ struct EditBookView: View {
     }
 }
 
+// prikaz na canvasu
 #Preview {
     // kreiranje custom preview containera
     let preview = PreviewContainer(Book.self)
