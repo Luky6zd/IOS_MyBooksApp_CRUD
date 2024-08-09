@@ -8,6 +8,9 @@
 import SwiftUI
 import SwiftData
 
+// MARK: LOGIC FOR BOOK LIST VIEW
+
+// struktura tipa View
 struct BookList: View {
     // environment property sa putanjom ključa od modela knjige u bazi
     // pristup contexu u bazi podataka za brisanje knjiga
@@ -20,9 +23,9 @@ struct BookList: View {
     // kreiranje dinamickog sortiranja
     @Query private var books: [Book]
     
-    // initializer za View
-    // initu prosljedujemo argument sort order tipa Enum SortOrder
-    init(sortOrder: SortOrder) {
+    // inicijalizator za Book List
+    // initu prosljedujemo argumente sort order tipa Enum SortOrder i tekst za filter
+    init(sortOrder: SortOrder, filterText: String) {
         // property tipa array generics, sortiranje po Book modelu
         // switchamo kroz enum Sort Order po autoru, naslovu i statusu
         let sortDescriptor: [SortDescriptor<Book>] = switch sortOrder {
@@ -36,11 +39,21 @@ struct BookList: View {
         case .status:
             [SortDescriptor(\Book.status), SortDescriptor(\Book.title)]
         }
-        // update query
-        _books = Query(sort: sortDescriptor)
+        // kreiranje predikata macro za filer knjiga iz querya
+        // tip po kojem vrsimo filter je klasa Book
+        // book je iterator za komparaciju da li rijec sadrzi odredeno slovo u naslovu ili autoru knjige
+        let predicate = #Predicate<Book> { book in
+            // pretraga nije case sensitive
+            book.title.localizedStandardContains(filterText) ||
+            book.author.localizedStandardContains(filterText) ||
+            // prikazan popis svih knjiga kada je search polje prazno
+            filterText.isEmpty
+        }
+        // update query sa filterom i sort orderom
+        _books = Query(filter: predicate, sort: sortDescriptor)
     }
     
-    
+    // body tipa some View
     var body: some View {
         // grupiranje arraya knjiga da se toolbar i naslov mogu uvijek prikazivati na ekranu,
         // bez obzira na if
@@ -60,10 +73,10 @@ struct BookList: View {
                         NavigationLink {
                             // pozivanje komponente
                             EditBookView(book: book)
-                        // oznaka za ikonice
+                        // oznaka za ikonice/simbole
                         } label: {
                             // formirane u horizontalni stack
-                             HStack(spacing: 10) {
+                             HStack(spacing: 20) {
                                 // prvi element u stacku
                                 book.icon
                                 // vertikalni stack, poravnavanje s lijeve strane
@@ -80,10 +93,10 @@ struct BookList: View {
                                             ForEach(1..<rating, id: \.self) {
                                                 _ in
                                                 // i za svaku knjigu kreira broj zvjezdica
-                                                Image(systemName: "star.fill")
+                                                Image(systemName: "heart.fill")
                                                     // View Modifieri
                                                     .imageScale(.small)
-                                                    .foregroundStyle(.yellow)
+                                                    .foregroundStyle(.red)
                                             }
                                         }
                                     }
@@ -109,6 +122,7 @@ struct BookList: View {
     }
 }
 
+// preview na canvasu
 #Preview {
     // kreiranje custom preview containera sa @Modelom book
     let preview = PreviewContainer(Book.self)
@@ -116,8 +130,8 @@ struct BookList: View {
     preview.addExamples(Book.sampleBooks)
     // preview vraca Navigation stack View sa listom knjiga
     return NavigationStack {
-        // odabrani sort order je autor
-        BookList(sortOrder: .author)
+        // odabrani sort order je autor, filter je prazni string
+        BookList(sortOrder: .author, filterText: "")
     }
         // pozivanje funkcije za prikaz knjiga iz preview containera
         .modelContainer(preview.container)

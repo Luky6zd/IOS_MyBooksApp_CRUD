@@ -7,17 +7,20 @@
 
 import SwiftUI
 
-// kreiranje nove knjige
+// MARK: ADD NEW BOOK
+
+// struktura za kreiranje nove knjige
 struct NewBookView: View {
     // environment varijabla, pristup contextu preko model context putanje
     @Environment(\.modelContext) private var context
     // environment varijabla za poziv dismiss akcije
     @Environment(\.dismiss) var dismiss
     
-    // state propertiji
+    // state propertiji, prazni su jer korisnik mora unijeti naslov i autora knjige
     @State private var title = ""
     @State private var author = ""
     
+    // body tipa some View
     var body: some View {
         // kreiranje navigacijske trake
         NavigationStack {
@@ -59,6 +62,7 @@ struct NewBookView: View {
     }
 }
 
+// prikaz na canvasu
 #Preview {
     NewBookView()
 }
