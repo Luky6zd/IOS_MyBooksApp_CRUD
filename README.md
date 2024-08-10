@@ -1,4 +1,5 @@
 PROJECT DESCRIPTION
+
 MyBooks application is created for IOS users with latest XCode 15.4, SwiftUI and Swift Data.
 Application is tracking status of books, they can ne on shelf, in process of reading or finished.
 It's a CRUD application, it can create, read, update, delete and search the books.
