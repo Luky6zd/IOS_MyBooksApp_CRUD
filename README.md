@@ -1,9 +1,13 @@
 PROJECT DESCRIPTION
 
 MyBooks application is created for IOS users with latest XCode 15.4, SwiftUI and Swift Data.
+
 Application is tracking status of books, they can ne on shelf, in process of reading or finished.
+
 It's a CRUD application, it can create, read, update, delete and search the books.
-SqLite database is used for storing these books.
+
+SqlLite database is used for storing these books.
+
 User can give a rating to a book.
 
 ![MyBooks_1](https://github.com/user-attachments/assets/c85dedcc-b032-40a6-a3d2-e96d3f2b45b8)
